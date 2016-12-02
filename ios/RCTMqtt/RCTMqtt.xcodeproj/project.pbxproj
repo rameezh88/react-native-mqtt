@@ -379,6 +379,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MQTTClient\"",
 					"\"${PODS_ROOT}/Headers/Public/SocketRocket\"",
 					"$(SRCROOT)/../../../react-native/React/**",
+					"$(SRCROOT)/../../../react-native-mqtt/ios/RCTMqtt/**",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -397,6 +398,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MQTTClient\"",
 					"\"${PODS_ROOT}/Headers/Public/SocketRocket\"",
 					"$(SRCROOT)/../../../react-native/React/**",
+					"$(SRCROOT)/../../../react-native-mqtt/ios/RCTMqtt/**",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

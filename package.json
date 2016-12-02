@@ -1,24 +1,91 @@
 {
-  "name": "react-native-mqtt",
-  "version": "0.1.0-beta4",
+  "_args": [
+    [
+      {
+        "raw": "react-native-mqtt@latest",
+        "scope": null,
+        "escapedName": "react-native-mqtt",
+        "name": "react-native-mqtt",
+        "rawSpec": "latest",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/react-native/fortum-smart-home"
+    ]
+  ],
+  "_from": "react-native-mqtt@latest",
+  "_id": "react-native-mqtt@0.1.0-beta4",
+  "_inCache": true,
+  "_location": "/react-native-mqtt",
+  "_nodeVersion": "5.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/react-native-mqtt-0.1.0-beta4.tgz_1456152367205_0.7240154661703855"
+  },
+  "_npmUser": {
+    "name": "tuanpm",
+    "email": "tuanpm@live.com"
+  },
+  "_npmVersion": "3.3.12",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-mqtt@latest",
+    "scope": null,
+    "escapedName": "react-native-mqtt",
+    "name": "react-native-mqtt",
+    "rawSpec": "latest",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-mqtt/-/react-native-mqtt-0.1.0-beta4.tgz",
+  "_shasum": "b96e17745fe31ae21abe2553cbbd8bee70fd5110",
+  "_shrinkwrap": null,
+  "_spec": "react-native-mqtt@latest",
+  "_where": "/react-native/fortum-smart-home",
+  "author": {
+    "name": "Tuan PM",
+    "email": "tuanpm@live.com",
+    "url": "http://tuanpm.net"
+  },
+  "bugs": {
+    "url": "https://github.com/tuanpmt/react-native-mqtt/issues"
+  },
+  "dependencies": {},
   "description": "MQTT client for react-native",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "b96e17745fe31ae21abe2553cbbd8bee70fd5110",
+    "tarball": "https://registry.npmjs.org/react-native-mqtt/-/react-native-mqtt-0.1.0-beta4.tgz"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tuanpmt/react-native-mqtt.git"
-  },
+  "gitHead": "cc9d66860db34706407523d1d2db1521dc8d3679",
+  "homepage": "https://github.com/tuanpmt/react-native-mqtt#readme",
   "keywords": [
     "mqtt",
     "reactnative",
     "iot"
   ],
-  "author": "Tuan PM <tuanpm@live.com> (http://tuanpm.net)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tuanpmt/react-native-mqtt/issues"
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "tuanpm",
+      "email": "tuanpm@live.com"
+    }
+  ],
+  "name": "react-native-mqtt",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuanpmt/react-native-mqtt.git"
   },
-  "homepage": "https://github.com/tuanpmt/react-native-mqtt#readme"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.0-beta4"
 }

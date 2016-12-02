@@ -14,7 +14,7 @@
 
 #import <MQTTClient/MQTTClient.h>
 #import <MQTTClient/MQTTSessionManager.h>
-#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/Classes/CocoaLumberjack.h>
 #import "Mqtt.h"
 
 @interface RCTMqtt : NSObject<RCTBridgeModule>
@@ -85,27 +85,27 @@ RCT_EXPORT_METHOD(createClient:(NSDictionary *) options
     resolve([NSNumber numberWithInt:clientRef]);
     
 }
-RCT_EXPORT_METHOD(connect:(nonnull NSNumber *) clientRef) {
+RCT_EXPORT_METHOD(connect:(int) clientRef) {
     
-    [[[self clients] objectForKey:clientRef] connect];
-    
-}
-
-
-RCT_EXPORT_METHOD(disconnect:(nonnull NSNumber *) clientRef) {
-    [[[self clients] objectForKey:clientRef] disconnect];
-}
-
-RCT_EXPORT_METHOD(subscribe:(nonnull NSNumber *) clientRef topic:(NSString *)topic qos:(nonnull NSNumber *)qos) {
-    [[[self clients] objectForKey:clientRef] subscribe:topic qos:qos]];
+    [[[self clients] objectForKey:[NSNumber numberWithInt:clientRef]] connect];
     
 }
 
-RCT_EXPORT_METHOD(publish:(nonnull NSNumber *) clientRef topic:(NSString *)topic data:(NSString*)data qos:(nonnull NSNumber *)qos retain:(BOOL)retain) {
-    [[[self clients] objectForKey:clientRef] publish:topic
-                                                data:[data dataUsingEncoding:NSUTF8StringEncoding]
-                                                 qos:qos
-                                              retain:retain];
+
+RCT_EXPORT_METHOD(disconnect:(int) clientRef) {
+    [[[self clients] objectForKey:[NSNumber numberWithInt:clientRef]] disconnect];
+}
+
+RCT_EXPORT_METHOD(subscribe:(int) clientRef topic:(NSString *)topic qos:(int)qos) {
+    [[[self clients] objectForKey:[NSNumber numberWithInt:clientRef]] subscribe:topic qos:[NSNumber numberWithInt:qos]];
+    
+}
+
+RCT_EXPORT_METHOD(publish:(int) clientRef topic:(NSString *)topic data:(NSString*)data qos:(int)qos retain:(int)retain) {
+    [[[self clients] objectForKey:[NSNumber numberWithInt:clientRef]] publish:topic
+                                                                         data:[data dataUsingEncoding:NSUTF8StringEncoding]
+                                                                          qos:[NSNumber numberWithInt:qos]
+                                                                       retain:(BOOL)retain];
 
 }
 

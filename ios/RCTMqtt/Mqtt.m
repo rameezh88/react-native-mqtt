@@ -171,7 +171,7 @@
 - (void) publish:(NSString *) topic data:(NSData *)data qos:(NSNumber *)qos retain:(BOOL) retain {
     [self.manager sendData:data
                      topic:topic
-                       qos:[qos intValue]
+                       qos:(MQTTQosLevel)qos
                     retain:retain];
     //[data dataUsingEncoding:NSUTF8StringEncoding]
 }

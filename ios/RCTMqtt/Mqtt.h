@@ -13,7 +13,7 @@
 
 #import <MQTTClient/MQTTClient.h>
 #import <MQTTClient/MQTTSessionManager.h>
-#import <CocoaLumberjack/CocoaLumberjack.h>
+#import <CocoaLumberjack/Classes/CocoaLumberjack.h>
 
 
 
