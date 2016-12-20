@@ -47,6 +47,7 @@ import java.security.cert.X509Certificate;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.SSLSocketFactory;
 
 
 public class RCTMqtt implements MqttCallback{
@@ -54,10 +55,12 @@ public class RCTMqtt implements MqttCallback{
 	private final ReactApplicationContext _reactContext;
 	private final WritableMap defaultOptions;
 	private final int clientRef;
+
+  private static final String CLIENT_KEYSTORE_PASSWD = null;
+
   MqttAsyncClient   client;
   MemoryPersistence memPer;
   MqttConnectOptions mqttoptions;
-
 
 	public RCTMqtt(int ref, ReactApplicationContext reactContext, final ReadableMap _options) {
 		clientRef = ref;
@@ -69,7 +72,6 @@ public class RCTMqtt implements MqttCallback{
 		defaultOptions.putBoolean("tls", false);
 		defaultOptions.putInt("keepalive", 1883);
 		defaultOptions.putString("clientId", "react-native-mqtt");
-		defaultOptions.putInt("protocolLevel", 4);
 		defaultOptions.putBoolean("clean", true);
 		defaultOptions.putBoolean("auth", false);
 		defaultOptions.putString("user", "");
@@ -80,7 +82,12 @@ public class RCTMqtt implements MqttCallback{
 		defaultOptions.putString("willMsg", "");
 		defaultOptions.putString("willtopic", "");
 		defaultOptions.putInt("willQos", 0);
-		defaultOptions.putBoolean("willRetainFlag", false);
+    defaultOptions.putBoolean("willRetainFlag", false);
+    defaultOptions.putBoolean("selfSignedCertificates", false);
+    defaultOptions.putString("targetPath", "");
+    defaultOptions.putString("clientCertificate", "");
+    defaultOptions.putString("caCertificate", "");
+    defaultOptions.putString("clientKey", "");
 
 		createClient(_options);
 	}
@@ -122,6 +129,16 @@ public class RCTMqtt implements MqttCallback{
 			defaultOptions.putInt("willQos",_options.getInt("willQos"));
 		if(_options.hasKey("willRetainFlag"))
 			defaultOptions.putBoolean("willRetainFlag", _options.getBoolean("willRetainFlag"));
+    if(_options.hasKey("selfSignedCertificates"))
+      defaultOptions.putBoolean("selfSignedCertificates", _options.getBoolean("selfSignedCertificates"));
+    if(_options.hasKey("targetPath"))
+      defaultOptions.putString("targetPath", _options.getString("targetPath"));
+    if(_options.hasKey("clientCertificate"))
+      defaultOptions.putString("clientCertificate", _options.getString("clientCertificate"));
+    if(_options.hasKey("caCertificate"))
+      defaultOptions.putString("caCertificate", _options.getString("caCertificate"));
+    if(_options.hasKey("clientKey"))
+      defaultOptions.putString("clientKey", _options.getString("clientKey"));
 
 		ReadableMap options = (ReadableMap) defaultOptions;
 
@@ -149,6 +166,8 @@ public class RCTMqtt implements MqttCallback{
         reading and modifying your "encrypted" data is trivial for an attacker and you wouldn't even know it was happening
         */
         
+
+        /*
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(null, new X509TrustManager[]{new X509TrustManager(){
             public void checkClientTrusted(X509Certificate[] chain,
@@ -158,16 +177,25 @@ public class RCTMqtt implements MqttCallback{
             public X509Certificate[] getAcceptedIssuers() {
                 return new X509Certificate[0];
             }}}, new SecureRandom());
+        */
 
-        mqttoptions.setSocketFactory(sslContext.getSocketFactory());
+        SSLSocketFactory sf = SocketFactoryUtil.createSocketFactory(
+            _reactContext,
+            options.getString("caCertificate"),
+            options.getString("clientCertificate"),
+            options.getString("clientKey"),
+            CLIENT_KEYSTORE_PASSWD,
+            options.getString("protocol"));
+
+        mqttoptions.setSocketFactory(sf);
+
       } catch(Exception e) {
-
+        log(e.toString());
       }
       
 
     }
-    uri += options.getString("host") + ":";
-    uri += options.getInt("port");
+    uri += options.getString("host")+":"+options.getInt("port");
 
     if(options.getBoolean("auth")) {
       String user = options.getString("user");
@@ -182,12 +210,19 @@ public class RCTMqtt implements MqttCallback{
 
     }
 
+    mqttoptions.setCleanSession(true);
+
     memPer = new MemoryPersistence();
 
     try {
     	client = new MqttAsyncClient(uri, options.getString("clientId"), memPer);
-    } catch(MqttException e) {
+      // MqttClient mc = new MqttClient(BROKER_URL, MqttClient.generateClientId(), new MemoryPersistence());
 
+    } catch(MqttException e) {
+      log("----------------------------------");
+      log("MqttException");
+      log(e.toString());
+      log("----------------------------------");
     }
 
 	}
@@ -218,8 +253,10 @@ public class RCTMqtt implements MqttCallback{
 	           	params.putString("event", "connect");
 	           	params.putString("message", "connected");
 	           	sendEvent(_reactContext, "mqtt_events", params);
+              log("--------------------------------------");
 	           	log("Connected");
-	              
+	            log("--------------------------------------");
+
 	          }
 
 	          public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
@@ -228,9 +265,14 @@ public class RCTMqtt implements MqttCallback{
 	           	params.putString("event", "error");
 	           	params.putString("message", "connection failure");
 	           	sendEvent(_reactContext, "mqtt_events", params);
+              log("--------------------------------------");
+              log("in onFailure():");
+              log(exception.toString());
+              log("--------------------------------------");
 	          }
 	        });
 	      } catch (MqttException e) {
+          log("in catch");
 	        WritableMap params = Arguments.createMap();
          	params.putString("event", "error");
          	params.putString("message", "Can't create connection");

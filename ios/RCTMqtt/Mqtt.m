@@ -41,7 +41,11 @@
                                 @"willMsg": [NSNull null],
                                 @"willtopic": @"",
                                 @"willQos": @0,
-                                @"willRetainFlag": @NO
+                                @"willRetainFlag": @NO,
+                                @"selfSignedCertificates": @NO,
+                                @"clientCertificate": @"",
+                                @"caCertificate": @"",
+                                @"clientSecret": @"",
                                 };
         
     }
@@ -68,10 +72,25 @@
             
             self.manager = [[MQTTSessionManager alloc] init];
             self.manager.delegate = self;
+            
+            NSArray *certificates = nil;
             MQTTSSLSecurityPolicy *securityPolicy = nil;
+            
             if(self.options[@"tls"]) {
                 securityPolicy = [MQTTSSLSecurityPolicy policyWithPinningMode:MQTTSSLPinningModeNone];
                 securityPolicy.allowInvalidCertificates = YES;
+                //securityPolicy.validatesCertificateChain = NO; //Not sure what this is good for and if it is needed when using certificates from trusted authorities...
+                
+                if(self.options[@"selfSignedCertificates"]) {
+                    NSArray *paths =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                    NSString *documentsDirectory = [paths objectAtIndex:0];
+
+                    NSString *ca = [documentsDirectory stringByAppendingPathComponent:self.options[@"caCertificate"]];
+                    securityPolicy.pinnedCertificates = @[[NSData dataWithContentsOfFile:ca]];
+                    
+                    NSString *clientCertificate = [documentsDirectory stringByAppendingPathComponent:self.options[@"clientCertificate"]];
+                    certificates = [MQTTCFSocketTransport clientCertsFromP12:clientCertificate passphrase:self.options[@"clientSecret"]];
+                }
             }
             
             
@@ -94,7 +113,7 @@
                      willRetainFlag:[self.options[@"willRetainFlag"] boolValue]
                        withClientId:[self.options valueForKey:@"clientId"]
                      securityPolicy:securityPolicy
-                       certificates:nil
+                       certificates:certificates
              ];
             
             [self.manager addObserver:self
@@ -137,6 +156,9 @@
                                                                    @"clientRef": [NSNumber numberWithInt:[self clientRef]],
                                                                    @"message": @"connected"
                                                                    }];
+            NSLog(@"------------------------------------------------------------------------------------------");
+            NSLog(@"connected");
+            NSLog(@"------------------------------------------------------------------------------------------");
             break;
         case MQTTSessionManagerStateConnecting:
             [self.bridge.eventDispatcher sendDeviceEventWithName:@"mqtt_events"
@@ -144,6 +166,9 @@
                                                                    @"clientRef": [NSNumber numberWithInt:[self clientRef]],
                                                                    @"message": @"connecting"
                                                                    }];
+            NSLog(@"------------------------------------------------------------------------------------------");
+            NSLog(@"connecting");
+            NSLog(@"------------------------------------------------------------------------------------------");
             break;
         case MQTTSessionManagerStateError:
             [self.bridge.eventDispatcher sendDeviceEventWithName:@"mqtt_events"
