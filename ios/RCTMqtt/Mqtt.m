@@ -81,7 +81,7 @@
                 securityPolicy.allowInvalidCertificates = YES;
                 //securityPolicy.validatesCertificateChain = NO; //Not sure what this is good for and if it is needed when using certificates from trusted authorities...
                 
-                if(self.options[@"selfSignedCertificates"]) {
+                if([self.options[@"selfSignedCertificates"] boolValue]) {
                     NSArray *paths =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                     NSString *documentsDirectory = [paths objectAtIndex:0];
 
@@ -113,7 +113,7 @@
                      willRetainFlag:[self.options[@"willRetainFlag"] boolValue]
                        withClientId:[self.options valueForKey:@"clientId"]
                      securityPolicy:securityPolicy
-                       certificates:certificates
+                       certificates:nil
              ];
             
             [self.manager addObserver:self
