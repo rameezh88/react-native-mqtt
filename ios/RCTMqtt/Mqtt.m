@@ -79,16 +79,18 @@
             if(self.options[@"tls"]) {
                 securityPolicy = [MQTTSSLSecurityPolicy policyWithPinningMode:MQTTSSLPinningModeNone];
                 securityPolicy.allowInvalidCertificates = YES;
-                //securityPolicy.validatesCertificateChain = NO; //Not sure what this is good for and if it is needed when using certificates from trusted authorities...
                 
                 if([self.options[@"selfSignedCertificates"] boolValue]) {
                     NSArray *paths =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                     NSString *documentsDirectory = [paths objectAtIndex:0];
-
+                    
+                    
                     NSString *ca = [documentsDirectory stringByAppendingPathComponent:self.options[@"caCertificate"]];
+                    
                     securityPolicy.pinnedCertificates = @[[NSData dataWithContentsOfFile:ca]];
                     
                     NSString *clientCertificate = [documentsDirectory stringByAppendingPathComponent:self.options[@"clientCertificate"]];
+                    
                     certificates = [MQTTCFSocketTransport clientCertsFromP12:clientCertificate passphrase:self.options[@"clientSecret"]];
                 }
             }
@@ -113,7 +115,7 @@
                      willRetainFlag:[self.options[@"willRetainFlag"] boolValue]
                        withClientId:[self.options valueForKey:@"clientId"]
                      securityPolicy:securityPolicy
-                       certificates:nil
+                       certificates:certificates
              ];
             
             [self.manager addObserver:self
@@ -125,9 +127,10 @@
         
         
     } else {
-        
+        NSLog(@"------------------------------------------------------------------------------------------");
+        NSLog(@"IN ELSE. RUNNING CONNCECTTOLAST");
+        NSLog(@"------------------------------------------------------------------------------------------");
         [self.manager connectToLast];
-        
     }
 }
 
@@ -141,7 +144,10 @@
                                                                    @"clientRef": [NSNumber numberWithInt:[self clientRef]],
                                                                    @"message": @"closed"
                                                                    }];
-
+            NSLog(@"------------------------------------------------------------------------------------------");
+            NSLog(@"MQTTSessionManagerStateClosed");
+            NSLog(@"------------------------------------------------------------------------------------------");
+            
             break;
         case MQTTSessionManagerStateClosing:
             [self.bridge.eventDispatcher sendDeviceEventWithName:@"mqtt_events"
@@ -184,8 +190,13 @@
 }
 
 - (void) disconnect {
-    [self.manager disconnect];
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
+    [self.manager disconnect];
+    
+    // self.manager = nil;
+    NSLog(@"-------------------------------------------------------------------------------------");
+    NSLog(@"IN DISCONNECT");
+    NSLog(@"-------------------------------------------------------------------------------------");
 }
 
 - (void) subscribe:(NSString *)topic qos:(NSNumber *)qos {
@@ -226,6 +237,9 @@
 
 - (void)dealloc
 {
+    NSLog(@"-------------------------------------------------------------------------------------");
+    NSLog(@"IN DEALLOC");
+    NSLog(@"-------------------------------------------------------------------------------------");
     [self disconnect];
     @try {
         

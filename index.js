@@ -22,7 +22,6 @@ var MqttClient = function(options, clientRef){
 }
 
 MqttClient.prototype.on = function (event, callback) {
-	console.log('setup event', event);
 	this.eventHandler[event] = callback;
 }
 
@@ -33,6 +32,7 @@ MqttClient.prototype.connect = function () {
 MqttClient.prototype.disconnect = function () {
 	Mqtt.disconnect(this.clientRef);
 }
+
 
 MqttClient.prototype.subscribe = function (topic, qos) {
 	Mqtt.subscribe(this.clientRef, topic, qos);
@@ -77,28 +77,45 @@ module.exports = {
 		var client = new MqttClient(options, clientRef);
 
 		/* Listen mqtt event */
-		if(this.eventHandler === null) {
-			console.log('add mqtt_events listener')
-			this.eventHandler = DeviceEventEmitter.addListener(
-							  	"mqtt_events",
-							  	(data) => this.dispatchEvents(data));
+		if (this.eventHandler === null) {
+			this.setEventHandler();
 		}
+
 		this.clients.push(client);
 
 		return client;
 	},
+	setEventHandler: function() {
+		this.eventHandler = DeviceEventEmitter.addListener("mqtt_events", (data) => this.dispatchEvents(data));
+	},
+	removeClients: function () {
+		this.clients = [];
+		if (this.eventHandler !== null) {
+			this.eventHandler.remove();
+			this.eventHandler = null;
+		}
+	},
+
 	removeClient: function(client) {
 		var clientIdx = this.clients.indexOf(client);
 
 		/* TODO: destroy client in native module */
+		Mqtt.removeClient(client.clientRef)
+			.then(() => {
+				//if found, remove from this.clients array
+				if (clientIdx > -1)
+					this.clients.splice(clientIdx, 1);
 
-		if(clientIdx > -1)
-			this.clients.splice(clientIdx, 1);
-
-		if(this.clients.length > 0) {
-			this.eventHandler.remove();
-			this.eventHandler = null;
-		}
+				//if this.clients array after removal contains anything
+				if (this.clients.length > 0) {
+					if (this.eventHandler !== null) {
+						this.eventHandler.remove();
+						this.eventHandler = null;
+						//shouldn't we add the listeners again?
+						this.setEventHandler();
+					}
+				}
+			});
 	}
 	
 };

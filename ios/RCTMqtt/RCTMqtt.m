@@ -85,12 +85,21 @@ RCT_EXPORT_METHOD(createClient:(NSDictionary *) options
     resolve([NSNumber numberWithInt:clientRef]);
     
 }
+
+RCT_EXPORT_METHOD(removeClient:(int) clientRef
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    
+    [[self clients] removeObjectForKey:[NSNumber numberWithInt:clientRef]];
+    resolve([NSNumber numberWithInt:clientRef]);
+    
+}
+
 RCT_EXPORT_METHOD(connect:(int) clientRef) {
     
     [[[self clients] objectForKey:[NSNumber numberWithInt:clientRef]] connect];
     
 }
-
 
 RCT_EXPORT_METHOD(disconnect:(int) clientRef) {
     [[[self clients] objectForKey:[NSNumber numberWithInt:clientRef]] disconnect];
@@ -106,15 +115,11 @@ RCT_EXPORT_METHOD(publish:(int) clientRef topic:(NSString *)topic data:(NSString
                                                                          data:[data dataUsingEncoding:NSUTF8StringEncoding]
                                                                           qos:[NSNumber numberWithInt:qos]
                                                                        retain:(BOOL)retain];
-
 }
 
 - (void)dealloc
 {
     
-    
 }
 
 @end
-
-
