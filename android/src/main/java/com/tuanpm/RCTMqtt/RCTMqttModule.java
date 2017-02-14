@@ -65,6 +65,12 @@ public class RCTMqttModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void removeClient(final int clientRef, Promise promise) {
+        clients.remove(clientRef);
+        promise.resolve(clientRef);
+    }
+
+    @ReactMethod
     public void connect(final int clientRef) {
       clients.get(clientRef).connect();
     }
