@@ -216,8 +216,6 @@ public class RCTMqtt implements MqttCallback{
 
     try {
     	client = new MqttAsyncClient(uri, options.getString("clientId"), memPer);
-      // MqttClient mc = new MqttClient(BROKER_URL, MqttClient.generateClientId(), new MemoryPersistence());
-
     } catch(MqttException e) {
       log("----------------------------------");
       log("MqttException");
@@ -254,7 +252,7 @@ public class RCTMqtt implements MqttCallback{
 	           	params.putString("message", "connected");
 	           	sendEvent(_reactContext, "mqtt_events", params);
               log("--------------------------------------");
-	           	log("Connected");
+	           	log("android Connected");
 	            log("--------------------------------------");
 
 	          }

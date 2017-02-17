@@ -11,10 +11,9 @@ var MqttClient = function(options, clientRef){
 	this.eventHandler = {};
 
 	this.dispatchEvent = function(data) {
-		
-		if(data && data.clientRef == this.clientRef && data.event) {
-
-			if(this.eventHandler[data.event]) {
+		if (data && data.event &&
+				data.clientRef === this.clientRef) {
+			if (this.eventHandler[data.event]) {
 				this.eventHandler[data.event](data.message);
 			}
 		}	
@@ -41,6 +40,10 @@ MqttClient.prototype.subscribe = function (topic, qos) {
 MqttClient.prototype.publish = function(topic, payload, qos, retain) {
 	Mqtt.publish(this.clientRef, topic, payload, qos, retain);
 }
+
+MqttClient.prototype.setEventHandler = function () {
+
+};
 
 module.exports = {
 	clients: [],
@@ -88,30 +91,20 @@ module.exports = {
 	setEventHandler: function() {
 		this.eventHandler = DeviceEventEmitter.addListener("mqtt_events", (data) => this.dispatchEvents(data));
 	},
-	removeClients: function () {
-		this.clients = [];
-		if (this.eventHandler !== null) {
-			this.eventHandler.remove();
-			this.eventHandler = null;
-		}
-	},
 
 	removeClient: function(client) {
-		var clientIdx = this.clients.indexOf(client);
-
-		/* TODO: destroy client in native module */
 		Mqtt.removeClient(client.clientRef)
 			.then(() => {
-				//if found, remove from this.clients array
-				if (clientIdx > -1)
-					this.clients.splice(clientIdx, 1);
+				// if found, remove from this.clients array
+				this.clients = this.clients.filter((clientToCheck) => {
+					return clientToCheck.clientRef !== client.clientRef;
+				});
 
 				//if this.clients array after removal contains anything
 				if (this.clients.length > 0) {
 					if (this.eventHandler !== null) {
 						this.eventHandler.remove();
 						this.eventHandler = null;
-						//shouldn't we add the listeners again?
 						this.setEventHandler();
 					}
 				}

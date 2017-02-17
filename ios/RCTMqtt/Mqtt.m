@@ -127,9 +127,6 @@
         
         
     } else {
-        NSLog(@"------------------------------------------------------------------------------------------");
-        NSLog(@"IN ELSE. RUNNING CONNCECTTOLAST");
-        NSLog(@"------------------------------------------------------------------------------------------");
         [self.manager connectToLast];
     }
 }
@@ -144,10 +141,6 @@
                                                                    @"clientRef": [NSNumber numberWithInt:[self clientRef]],
                                                                    @"message": @"closed"
                                                                    }];
-            NSLog(@"------------------------------------------------------------------------------------------");
-            NSLog(@"MQTTSessionManagerStateClosed");
-            NSLog(@"------------------------------------------------------------------------------------------");
-            
             break;
         case MQTTSessionManagerStateClosing:
             [self.bridge.eventDispatcher sendDeviceEventWithName:@"mqtt_events"
@@ -162,9 +155,6 @@
                                                                    @"clientRef": [NSNumber numberWithInt:[self clientRef]],
                                                                    @"message": @"connected"
                                                                    }];
-            NSLog(@"------------------------------------------------------------------------------------------");
-            NSLog(@"connected");
-            NSLog(@"------------------------------------------------------------------------------------------");
             break;
         case MQTTSessionManagerStateConnecting:
             [self.bridge.eventDispatcher sendDeviceEventWithName:@"mqtt_events"
@@ -172,9 +162,6 @@
                                                                    @"clientRef": [NSNumber numberWithInt:[self clientRef]],
                                                                    @"message": @"connecting"
                                                                    }];
-            NSLog(@"------------------------------------------------------------------------------------------");
-            NSLog(@"connecting");
-            NSLog(@"------------------------------------------------------------------------------------------");
             break;
         case MQTTSessionManagerStateError:
             [self.bridge.eventDispatcher sendDeviceEventWithName:@"mqtt_events"
@@ -190,13 +177,8 @@
 }
 
 - (void) disconnect {
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
     [self.manager disconnect];
-    
-    // self.manager = nil;
-    NSLog(@"-------------------------------------------------------------------------------------");
-    NSLog(@"IN DISCONNECT");
-    NSLog(@"-------------------------------------------------------------------------------------");
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:1.0]];
 }
 
 - (void) subscribe:(NSString *)topic qos:(NSNumber *)qos {
@@ -218,7 +200,7 @@
     /*
      * MQTTClient: process received message
      */
-    
+
     NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     RCTLogInfo(@" %@ : %@", topic, dataString);
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"mqtt_events"
@@ -237,9 +219,6 @@
 
 - (void)dealloc
 {
-    NSLog(@"-------------------------------------------------------------------------------------");
-    NSLog(@"IN DEALLOC");
-    NSLog(@"-------------------------------------------------------------------------------------");
     [self disconnect];
     @try {
         
