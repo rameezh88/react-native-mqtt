@@ -1,24 +1,89 @@
 {
-  "name": "react-native-mqtt",
-  "version": "0.1.19",
+  "_args": [
+    [
+      {
+        "raw": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+        "spec": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:pellepersson/react-native-mqtt.git#rusfearuth",
+          "sshUrl": "git+ssh://git@github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+          "httpsUrl": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+          "gitUrl": "git://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+          "shortcut": "github:pellepersson/react-native-mqtt#rusfearuth",
+          "directUrl": "https://raw.githubusercontent.com/pellepersson/react-native-mqtt/rusfearuth/package.json"
+        }
+      },
+      "/react-native/tingco-home-version-2"
+    ]
+  ],
+  "_from": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+  "_id": "react-native-mqtt@0.1.19",
+  "_inCache": true,
+  "_location": "/react-native-mqtt",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+    "spec": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:pellepersson/react-native-mqtt.git#rusfearuth",
+      "sshUrl": "git+ssh://git@github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+      "httpsUrl": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+      "gitUrl": "git://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+      "shortcut": "github:pellepersson/react-native-mqtt#rusfearuth",
+      "directUrl": "https://raw.githubusercontent.com/pellepersson/react-native-mqtt/rusfearuth/package.json"
+    }
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/pellepersson/react-native-mqtt.git#1dfd5ec0cb5b0c4b604e21faa3b3d85174b7b0ea",
+  "_shasum": "79d8ce3ec413b92e578cbad3615c9d25838dda19",
+  "_shrinkwrap": null,
+  "_spec": "git+https://github.com/pellepersson/react-native-mqtt.git#rusfearuth",
+  "_where": "/react-native/tingco-home-version-2",
+  "author": {
+    "name": "Tuan PM",
+    "email": "tuanpm@live.com",
+    "url": "http://tuanpm.net"
+  },
+  "bugs": {
+    "url": "https://github.com/tuanpmt/react-native-mqtt/issues"
+  },
+  "dependencies": {},
   "description": "MQTT client for react-native",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tuanpmt/react-native-mqtt.git"
-  },
+  "devDependencies": {},
+  "gitHead": "1dfd5ec0cb5b0c4b604e21faa3b3d85174b7b0ea",
+  "homepage": "https://github.com/tuanpmt/react-native-mqtt#readme",
   "keywords": [
     "mqtt",
     "reactnative",
     "iot"
   ],
-  "author": "Tuan PM <tuanpm@live.com> (http://tuanpm.net)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tuanpmt/react-native-mqtt/issues"
+  "main": "index.js",
+  "name": "react-native-mqtt",
+  "optionalDependencies": {},
+  "readme": "\n\n[![npm](https://img.shields.io/npm/dt/react-native-mqtt.svg)]()\n\n## Description \n\n[react-native](https://github.com/facebook/react-native) mqtt client module\n\n## MQTT Features (inherit from native MQTT framework)\n* Use [MQTT Framework](https://github.com/ckrey/MQTT-Client-Framework) for IOS, [Paho MQTT Client](https://eclipse.org/paho/clients/android/) for Android\n* Support both IOS and Android\n* SSL/TLS \n* Native library, support mqtt over tcp \n\n## Warning\nThis library in progress developing, api may change, SSL/TLS non verify \n\n## Getting started\n\n### Manual install\n\n#### JS\n```bash\nnpm install rusfearuth/react-native-mqtt --save\n```\nor\n```bash\nyarn add rusfearuth/react-native-mqtt\n```\n\n\n#### iOS\n-  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`\n- Go to `node_modules` ➜ `react-native-mqtt` and add `RCTMqtt.xcodeproj`\n- In XCode, in the project navigator, select your project. Add `libRCTmqtt.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`\n- Click `RCTMqtt.xcodeproj` in the project navigator and go the `Build Settings` tab. Make sure 'All' is toggled on (instead of 'Basic'). In the `Search Paths` section, look for `Header Search Paths` and make sure it contains both `$(SRCROOT)/../../react-native/React` - mark  as `recursive`.\n- Run your project (`Cmd+R`)\n\n\n#### Android\n-   Modify the ReactInstanceManager.builder() calls chain in `android/app/main/java/.../MainActivity.java` to include:\n\n```java\nimport com.tuanpm.RCTMqtt.*; // import\n\n\n.addPackage(new RCTMqttPackage()) //for older version\n\nnew RCTMqttPackage()           // for newest version of react-native\n```\n\n-  Append the following lines to `android/settings.gradle` before `include ':app'`:\n\n```\ninclude ':react-native-mqtt'\nproject(':react-native-mqtt').projectDir = new File(rootProject.projectDir,  '../node_modules/react-native-mqtt/android')\n\n```\n\n\n- Insert the following lines inside the dependencies block in `android/app/build.gradle`, don't missing `apply plugin:'java'` on top:\n\n```\ncompile project(':react-native-mqtt')\n```\n\nNotes:\n\n```\ndependencies {\n  compile project(':react-native-mqtt')\n}\n```\n\n\n## Usage\n\n```javascript\nvar mqtt    = require('react-native-mqtt');\n\n/* create mqtt client */\nmqtt.createClient({\n  uri: 'mqtt://test.mosquitto.org:1883', \n  clientId: 'your_client_id'\n}).then(function(client) {\n\n  client.on('closed', function() {\n    console.log('mqtt.event.closed');\n    \n  });\n  \n  client.on('error', function(msg) {\n    console.log('mqtt.event.error', msg);\n    \n  });\n\n  client.on('message', function(msg) {\n    console.log('mqtt.event.message', msg);\n  });\n\n  client.on('connect', function() {\n    console.log('connected');\n    client.subscribe('/data', 0);\n    client.publish('/data', \"test\", 0, false);\n  });\n\n  client.connect();\n}).catch(function(err){\n  console.log(err);\n});\n\n```\n\n## API\n* `mqtt.createClient(options)`  create new client instance with `options`, async operation\n  - `uri`: `protocol://host:port`, protocol is [mqtt | mqtts]\n  - `host`: ipaddress or host name (override by uri if set)\n  - `port`: port number (override by uri if set)\n  - `tls`: true/false (override by uri if set to mqtts or wss)\n  - `user`: string username\n  - `pass`: string password\n  - `auth`: true/false - override = true if `user` or `pass` exist\n  - `clientId`: string client id\n  - `keepalive`\n\n* `client`\n  - `on(event, callback)`: add event listener for\n    + event: `connect` - client connected\n    + event: `closed` - client disconnected\n    + event: `error` - error\n    + event: `message` - message object\n  - `connect`: begin connection\n  - `disconnect`: disconnect\n  - `subscribe(topic, qos)`\n  - `publish(topic, payload, qos, retain)`\n\n* `message`\n  - `retain`: *boolean* `false`\n  - `qos`: *number* `2`\n  - `data`: *string* `\"test message\"`\n  - `topic`: *string* `\"/data\"`\n\n## Todo\n\n* [ ] Use WeakReference for timer\n* [ ] Add disconnecting event\n\n\n## LICENSE\n\n```\nINHERIT FROM MQTT LIBRARY (progress)\n```\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuanpmt/react-native-mqtt.git"
   },
-  "homepage": "https://github.com/tuanpmt/react-native-mqtt#readme"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.19"
 }

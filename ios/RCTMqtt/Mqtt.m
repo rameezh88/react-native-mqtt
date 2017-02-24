@@ -40,7 +40,11 @@
                                 @"willMsg": [NSNull null],
                                 @"willtopic": @"",
                                 @"willQos": @0,
-                                @"willRetainFlag": @NO
+                                @"willRetainFlag": @NO,
+                                @"selfSignedCertificates": @NO,
+                                @"clientCertificate": @"",
+                                @"caCertificate": @"",
+                                @"clientSecret": @"",
                                 };
         
     }
@@ -66,15 +70,28 @@
 
 - (void) connect {
     MQTTSSLSecurityPolicy *securityPolicy = nil;
+    NSArray *certificates = nil;
+
     if(self.options[@"tls"]) {
         securityPolicy = [MQTTSSLSecurityPolicy policyWithPinningMode:MQTTSSLPinningModeNone];
         securityPolicy.allowInvalidCertificates = YES;
+
+
+        if([self.options[@"selfSignedCertificates"] boolValue]) {
+            NSArray *paths =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString *ca = [documentsDirectory stringByAppendingPathComponent:self.options[@"caCertificate"]];
+            securityPolicy.pinnedCertificates = @[[NSData dataWithContentsOfFile:ca]];
+            NSString *clientCertificate = [documentsDirectory stringByAppendingPathComponent:self.options[@"clientCertificate"]];
+            certificates = [MQTTCFSocketTransport clientCertsFromP12:clientCertificate passphrase:self.options[@"clientSecret"]];
+        }
     }
     
     NSData *willMsg = nil;
     if(self.options[@"willMsg"] != [NSNull null]) {
         willMsg = [self.options[@"willMsg"] dataUsingEncoding:NSUTF8StringEncoding];
     }
+
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [self.manager connectTo:[self.options valueForKey:@"host"]
                            port:[self.options[@"port"] intValue]
@@ -91,7 +108,7 @@
                  willRetainFlag:[self.options[@"willRetainFlag"] boolValue]
                    withClientId:[self.options valueForKey:@"clientId"]
                  securityPolicy:securityPolicy
-                   certificates:nil
+                   certificates:certificates
          ];
     }];
 }

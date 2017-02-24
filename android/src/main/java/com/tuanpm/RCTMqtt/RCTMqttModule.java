@@ -58,7 +58,10 @@ public class RCTMqttModule
     @ReactMethod
     public void disconnect(@NonNull final String clientRef)
     {
-        clients.get(clientRef).disconnect();
+        if (clients.get(clientRef) != null)
+        {
+            clients.get(clientRef).disconnect();
+        }
     }
 
     @ReactMethod

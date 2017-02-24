@@ -36,8 +36,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nullable;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
+import javax.net.ssl.SSLSocketFactory;
 
 public class RCTMqtt
         implements MqttCallback
@@ -50,6 +51,8 @@ public class RCTMqtt
     private MemoryPersistence memPer;
     private MqttConnectOptions mqttOptions;
     private Map<String, Integer> topics = new HashMap<>();
+    private static final String CLIENT_KEYSTORE_PASSWD = null;
+
 
     public RCTMqtt(@NonNull final String ref,
                    final ReactApplicationContext reactContext,
@@ -75,6 +78,11 @@ public class RCTMqtt
         defaultOptions.putString("willtopic", "");
         defaultOptions.putInt("willQos", 0);
         defaultOptions.putBoolean("willRetainFlag", false);
+        defaultOptions.putBoolean("selfSignedCertificates", false);
+        defaultOptions.putString("targetPath", "");
+        defaultOptions.putString("clientCertificate", "");
+        defaultOptions.putString("caCertificate", "");
+        defaultOptions.putString("clientKey", "");
 
         createClient(options);
     }
@@ -153,6 +161,22 @@ public class RCTMqtt
         {
             defaultOptions.putBoolean("willRetainFlag", params.getBoolean("willRetainFlag"));
         }
+        if (params.hasKey("selfSignedCertificates"))
+        {
+          defaultOptions.putBoolean("selfSignedCertificates", params.getBoolean("selfSignedCertificates"));
+        }
+        if (params.hasKey("targetPath")) {
+          defaultOptions.putString("targetPath", params.getString("targetPath"));
+        }
+        if (params.hasKey("clientCertificate")) {
+          defaultOptions.putString("clientCertificate", params.getString("clientCertificate"));
+        }
+        if (params.hasKey("caCertificate")) {
+          defaultOptions.putString("caCertificate", params.getString("caCertificate"));
+        }
+        if (params.hasKey("clientKey")) {
+          defaultOptions.putString("clientKey", params.getString("clientKey"));
+        }
 
         ReadableMap options = defaultOptions;
 
@@ -183,28 +207,15 @@ public class RCTMqtt
         			SSL/TLS without authentication is worse than no encryption at all -
         			reading and modifying your "encrypted" data is trivial for an attacker and you wouldn't even know it was happening
         		 */
-                SSLContext sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, new X509TrustManager[]{new X509TrustManager()
-                {
-                    public void checkClientTrusted(X509Certificate[] chain,
-                                                   String authType) throws
-                            CertificateException
-                    {
-                    }
-
-                    public void checkServerTrusted(X509Certificate[] chain,
-                                                   String authType) throws
-                            CertificateException
-                    {
-                    }
-
-                    public X509Certificate[] getAcceptedIssuers()
-                    {
-                        return new X509Certificate[0];
-                    }
-                }}, new SecureRandom());
-
-                mqttOptions.setSocketFactory(sslContext.getSocketFactory());
+                SSLSocketFactory sf = SocketFactoryUtil.createSocketFactory(
+                    reactContext,
+                    options.getString("caCertificate"),
+                    options.getString("clientCertificate"),
+                    options.getString("clientKey"),
+                    CLIENT_KEYSTORE_PASSWD,
+                    options.getString("protocol"));
+                
+                mqttOptions.setSocketFactory(sf);
             }
             catch (Exception e)
             {

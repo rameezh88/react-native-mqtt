@@ -11,12 +11,9 @@ var MqttClient = function(options, clientRef){
   this.eventHandler = {};
 
   this.dispatchEvent = function(data) {
-
-    if(data && data.clientRef == this.clientRef && data.event) {
-
-      if(this.eventHandler[data.event]) {
-        this.eventHandler[data.event](data.message);
-      }
+    if (data && data.clientRef == this.clientRef &&
+        data.event && this.eventHandler[data.event]) {
+      this.eventHandler[data.event](data.message);
     }
   }
 }
@@ -84,24 +81,26 @@ module.exports = {
 
     /* Listen mqtt event */
     if(this.eventHandler === null) {
-      console.log('add mqtt_events listener')
-      this.eventHandler = emitter.addListener(
-        "mqtt_events",
-        (data) => this.dispatchEvents(data));
+      this.setEventHandler();
     }
     this.clients.push(client);
 
     return client;
   },
-  removeClient: function(client) {
-    var clientIdx = this.clients.indexOf(client);
 
-    if(clientIdx > -1)
-      this.clients.splice(clientIdx, 1);
+  setEventHandler: function() {
+    this.eventHandler = emitter.addListener("mqtt_events", (data) => this.dispatchEvents(data));
+  },
+
+  removeClient: function(client) {
+    this.clients = this.clients.filter(clientToCheck => {
+      return clientToCheck.clientRef !== client.clientRef;
+    });
 
     if(this.clients.length > 0) {
       this.eventHandler.remove();
       this.eventHandler = null;
+      this.setEventHandler();
     }
 
     Mqtt.removeClient(client.clientRef);
