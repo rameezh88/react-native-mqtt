@@ -299,7 +299,7 @@ public class RCTMqtt
                             .append(exception).toString();
                     params.putString("message", errorDescription);
                     sendEvent(reactContext, "mqtt_events", params);
-                    reconnectIfNeeded(exception);
+                    //reconnectIfNeeded(exception);
                 }
             });
         }
@@ -314,11 +314,12 @@ public class RCTMqtt
 
     public void disconnect()
     {
+        log("Disconnect Completed");
+
         IMqttActionListener discListener = new IMqttActionListener()
         {
             public void onSuccess(IMqttToken asyncActionToken)
             {
-                log("Disconnect Completed");
                 WritableMap params = Arguments.createMap();
                 params.putString("event", "closed");
                 params.putString("message", "Disconnect");
@@ -442,10 +443,10 @@ public class RCTMqtt
         // Called when the connection to the server has been lost.
         // An application may choose to implement reconnection
         // logic at this point. This sample simply exits.
-        log(new StringBuilder("Connection to lost! ").append(cause).toString());
+        log(new StringBuilder("Connection lost! ").append(cause).toString());
         WritableMap params = Arguments.createMap();
-        params.putString("event", "error");
-        final String errorDescription = new StringBuilder("Connection to lost! ")
+        params.putString("event", "connection-error");
+        final String errorDescription = new StringBuilder("Connection lost! ")
                 .append(cause).toString();
         params.putString("message", errorDescription);
         sendEvent(reactContext, "mqtt_events", params);
