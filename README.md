@@ -17,17 +17,6 @@ This library in progress developing, api may change, SSL/TLS non verify
 
 ## Getting started
 
-### Manual install
-
-#### JS
-```bash
-npm install rusfearuth/react-native-mqtt --save
-```
-or
-```bash
-yarn add rusfearuth/react-native-mqtt
-```
-
 
 #### iOS
 -  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
