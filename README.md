@@ -27,15 +27,16 @@ This library in progress developing, api may change, SSL/TLS non verify
 
 
 #### Android
--   Modify the ReactInstanceManager.builder() calls chain in `android/app/main/java/.../MainActivity.java` to include:
+-   Modify the following in `android/app/main/java/.../MainApplication.java` to include:
 
 ```java
-import com.tuanpm.RCTMqtt.*; // import
+
+Add this to the imports in the top of your file:
+import com.tuanpm.RCTMqtt.*;
 
 
-.addPackage(new RCTMqttPackage()) //for older version
-
-new RCTMqttPackage()           // for newest version of react-native
+Add this where the getPackages() list:
+new RCTMqttPackage()
 ```
 
 -  Append the following lines to `android/settings.gradle` before `include ':app'`:
@@ -47,7 +48,7 @@ project(':react-native-mqtt').projectDir = new File(rootProject.projectDir,  '..
 ```
 
 
-- Insert the following lines inside the dependencies block in `android/app/build.gradle`, don't missing `apply plugin:'java'` on top:
+- Insert the following lines inside the dependencies block in `android/app/build.gradle`:
 
 ```
 compile project(':react-native-mqtt')
