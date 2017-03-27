@@ -21,7 +21,7 @@ This library in progress developing, api may change, SSL/TLS non verify
 #### iOS
 -  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 - Go to `node_modules` ➜ `react-native-mqtt` and add `RCTMqtt.xcodeproj`
-- In XCode, in the project navigator, select your project. Add `libRCTmqtt.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
+- In XCode, in the project navigator, select your project. Add `libRCTmqtt.a` and `libicucore.tbd` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 - Click `RCTMqtt.xcodeproj` in the project navigator and go the `Build Settings` tab. Make sure 'All' is toggled on (instead of 'Basic'). In the `Search Paths` section, look for `Header Search Paths` and make sure it contains both `$(SRCROOT)/../../react-native/React` - mark  as `recursive`.
 - Run your project (`Cmd+R`)
 
@@ -132,7 +132,6 @@ mqtt.createClient({
 ## Todo
 
 * [ ] Use WeakReference for timer
-* [ ] Add disconnecting event
 
 
 ## LICENSE
