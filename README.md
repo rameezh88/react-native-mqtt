@@ -31,11 +31,11 @@ This library in progress developing, api may change, SSL/TLS non verify
 
 ```java
 
-Add this to the imports in the top of your file:
+// Add this to the imports in the top of your file:
 import com.tuanpm.RCTMqtt.*;
 
 
-Add this where the getPackages() list:
+// Add this where the getPackages() list:
 new RCTMqttPackage()
 ```
 
@@ -52,14 +52,6 @@ project(':react-native-mqtt').projectDir = new File(rootProject.projectDir,  '..
 
 ```
 compile project(':react-native-mqtt')
-```
-
-Notes:
-
-```
-dependencies {
-  compile project(':react-native-mqtt')
-}
 ```
 
 
