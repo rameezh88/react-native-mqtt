@@ -4,7 +4,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:1.2.3'
+    classpath 'com.android.tools.build:gradle:2.2.3'
   }
 }
 
@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.facebook.react:react-native:0.19.+'
+  compile 'com.facebook.react:react-native:+'
   compile('org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2') {
       exclude module: 'support-v4'
   }

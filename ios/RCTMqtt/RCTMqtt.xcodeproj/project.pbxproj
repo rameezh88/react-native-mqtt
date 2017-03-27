@@ -7,49 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C95DBF6E260A78D686CA9121 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B740AC6198A5D77A7A48DD51 /* libPods.a */; };
+		A841BE22E98C6742FF425184 /* libPods-RCTMqtt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B55C262163796F269BAA3909 /* libPods-RCTMqtt.a */; };
+		D20012C61E4FA06500CE2854 /* Mqtt.m in Sources */ = {isa = PBXBuildFile; fileRef = D20012C51E4FA06500CE2854 /* Mqtt.m */; };
+		D22753771E4FC1C1009AB3F8 /* libSocketRocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22753761E4FC1C1009AB3F8 /* libSocketRocket.a */; };
+		D2F42A421E4FBD7C00343251 /* libMQTTClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D218D27B1E4F7EE2000D8F51 /* libMQTTClient.a */; };
 		FF7A9D4E1C64788B006743BA /* RCTMqtt.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7A9D4C1C64788B006743BA /* RCTMqtt.m */; };
-		FF7A9D671C6478E6006743BA /* libCocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7A9D5E1C6478D5006743BA /* libCocoaLumberjack.a */; };
-		FF7A9D681C6478E6006743BA /* libMQTTClient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7A9D601C6478D5006743BA /* libMQTTClient.a */; };
-		FF7A9D691C6478E6006743BA /* libPods-RCTMqtt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7A9D641C6478D5006743BA /* libPods-RCTMqtt.a */; };
-		FF7A9D6A1C6478E6006743BA /* libSocketRocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7A9D661C6478D5006743BA /* libSocketRocket.a */; };
-		FFAB5A541C6F7A3C00B4953D /* Mqtt.m in Sources */ = {isa = PBXBuildFile; fileRef = FFAB5A531C6F7A3C00B4953D /* Mqtt.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FF7A9D5D1C6478D5006743BA /* PBXContainerItemProxy */ = {
+		D218D27A1E4F7EE2000D8F51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FF7A9D551C6478D5006743BA /* Pods.xcodeproj */;
+			containerPortal = D218D2741E4F7EE1000D8F51 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5DDC6979D43CBAA94BC17E0FE9346049;
-			remoteInfo = CocoaLumberjack;
-		};
-		FF7A9D5F1C6478D5006743BA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF7A9D551C6478D5006743BA /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 618990C63BF2EB729CD98AA296B76608;
+			remoteGlobalIDString = 318E89590A5684E53EC2C67636F92021;
 			remoteInfo = MQTTClient;
 		};
-		FF7A9D611C6478D5006743BA /* PBXContainerItemProxy */ = {
+		D218D27C1E4F7EE2000D8F51 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FF7A9D551C6478D5006743BA /* Pods.xcodeproj */;
+			containerPortal = D218D2741E4F7EE1000D8F51 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5FC3CD7959DA35C88651628AA2008DA3;
-			remoteInfo = Pods;
-		};
-		FF7A9D631C6478D5006743BA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF7A9D551C6478D5006743BA /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 40D9AB7030492C31931D30C0FEA8789D;
+			remoteGlobalIDString = B970A7F185BF945A74ADFEE2441A7F5B;
 			remoteInfo = "Pods-RCTMqtt";
 		};
-		FF7A9D651C6478D5006743BA /* PBXContainerItemProxy */ = {
+		D22753751E4FC1C1009AB3F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FF7A9D551C6478D5006743BA /* Pods.xcodeproj */;
+			containerPortal = D218D2741E4F7EE1000D8F51 /* Pods.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = B31DA83D9854A5EBA678A2513B4CAFFF;
+			remoteGlobalIDString = 8BA2FB05B17409076B33A55A70DFB4CC;
 			remoteInfo = SocketRocket;
 		};
 /* End PBXContainerItemProxy section */
@@ -67,15 +51,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6216C4E132BF21BB407435DF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		B740AC6198A5D77A7A48DD51 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9899CBF69418BB060CBA6A4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		4249D0004A04076D92547DD0 /* Pods-RCTMqtt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RCTMqtt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RCTMqtt/Pods-RCTMqtt.debug.xcconfig"; sourceTree = "<group>"; };
+		65867FF64EF615F5B1FF81B0 /* Pods-RCTMqtt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RCTMqtt.release.xcconfig"; path = "Pods/Target Support Files/Pods-RCTMqtt/Pods-RCTMqtt.release.xcconfig"; sourceTree = "<group>"; };
+		B55C262163796F269BAA3909 /* libPods-RCTMqtt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RCTMqtt.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D20012C41E4FA06500CE2854 /* Mqtt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
+		D20012C51E4FA06500CE2854 /* Mqtt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mqtt.m; sourceTree = "<group>"; };
+		D218D2741E4F7EE1000D8F51 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		FF7A9D401C64785B006743BA /* libRCTMqtt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTMqtt.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF7A9D4C1C64788B006743BA /* RCTMqtt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTMqtt.m; sourceTree = "<group>"; };
 		FF7A9D4D1C64788B006743BA /* RCTMqtt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTMqtt.h; sourceTree = "<group>"; };
-		FF7A9D551C6478D5006743BA /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
-		FFAB5A531C6F7A3C00B4953D /* Mqtt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mqtt.m; sourceTree = "<group>"; };
-		FFAB5A561C702CA500B4953D /* Mqtt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mqtt.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,11 +67,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF7A9D671C6478E6006743BA /* libCocoaLumberjack.a in Frameworks */,
-				FF7A9D681C6478E6006743BA /* libMQTTClient.a in Frameworks */,
-				FF7A9D691C6478E6006743BA /* libPods-RCTMqtt.a in Frameworks */,
-				FF7A9D6A1C6478E6006743BA /* libSocketRocket.a in Frameworks */,
-				C95DBF6E260A78D686CA9121 /* libPods.a in Frameworks */,
+				D22753771E4FC1C1009AB3F8 /* libSocketRocket.a in Frameworks */,
+				D2F42A421E4FBD7C00343251 /* libMQTTClient.a in Frameworks */,
+				A841BE22E98C6742FF425184 /* libPods-RCTMqtt.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +79,7 @@
 		1EA4FFB6633E7E226B726A7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B740AC6198A5D77A7A48DD51 /* libPods.a */,
+				B55C262163796F269BAA3909 /* libPods-RCTMqtt.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -105,23 +87,33 @@
 		38EFACF7AB6D9C9C3D24BDCB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B9899CBF69418BB060CBA6A4 /* Pods.debug.xcconfig */,
-				6216C4E132BF21BB407435DF /* Pods.release.xcconfig */,
+				4249D0004A04076D92547DD0 /* Pods-RCTMqtt.debug.xcconfig */,
+				65867FF64EF615F5B1FF81B0 /* Pods-RCTMqtt.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D218D2751E4F7EE1000D8F51 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D218D27B1E4F7EE2000D8F51 /* libMQTTClient.a */,
+				D218D27D1E4F7EE2000D8F51 /* libPods-RCTMqtt.a */,
+				D22753761E4FC1C1009AB3F8 /* libSocketRocket.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		FF7A9D371C64785B006743BA = {
 			isa = PBXGroup;
 			children = (
-				FF7A9D551C6478D5006743BA /* Pods.xcodeproj */,
-				FFAB5A531C6F7A3C00B4953D /* Mqtt.m */,
-				FFAB5A561C702CA500B4953D /* Mqtt.h */,
+				D20012C41E4FA06500CE2854 /* Mqtt.h */,
+				D20012C51E4FA06500CE2854 /* Mqtt.m */,
 				FF7A9D4C1C64788B006743BA /* RCTMqtt.m */,
 				FF7A9D4D1C64788B006743BA /* RCTMqtt.h */,
 				FF7A9D411C64785B006743BA /* Products */,
 				38EFACF7AB6D9C9C3D24BDCB /* Pods */,
 				1EA4FFB6633E7E226B726A7B /* Frameworks */,
+				D218D2741E4F7EE1000D8F51 /* Pods.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,18 +125,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF7A9D561C6478D5006743BA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FF7A9D5E1C6478D5006743BA /* libCocoaLumberjack.a */,
-				FF7A9D601C6478D5006743BA /* libMQTTClient.a */,
-				FF7A9D621C6478D5006743BA /* libPods.a */,
-				FF7A9D641C6478D5006743BA /* libPods-RCTMqtt.a */,
-				FF7A9D661C6478D5006743BA /* libSocketRocket.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -152,11 +132,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF7A9D491C64785B006743BA /* Build configuration list for PBXNativeTarget "RCTMqtt" */;
 			buildPhases = (
-				8A2A2943DEA045B900795060 /* Check Pods Manifest.lock */,
+				8A2A2943DEA045B900795060 /* [CP] Check Pods Manifest.lock */,
 				FF7A9D3C1C64785B006743BA /* Sources */,
 				FF7A9D3D1C64785B006743BA /* Frameworks */,
 				FF7A9D3E1C64785B006743BA /* CopyFiles */,
-				F3DBD44A4CBD3EF469481482 /* Copy Pods Resources */,
+				F3DBD44A4CBD3EF469481482 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -193,8 +173,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FF7A9D561C6478D5006743BA /* Products */;
-					ProjectRef = FF7A9D551C6478D5006743BA /* Pods.xcodeproj */;
+					ProductGroup = D218D2751E4F7EE1000D8F51 /* Products */;
+					ProjectRef = D218D2741E4F7EE1000D8F51 /* Pods.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -205,72 +185,58 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		FF7A9D5E1C6478D5006743BA /* libCocoaLumberjack.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaLumberjack.a;
-			remoteRef = FF7A9D5D1C6478D5006743BA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FF7A9D601C6478D5006743BA /* libMQTTClient.a */ = {
+		D218D27B1E4F7EE2000D8F51 /* libMQTTClient.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libMQTTClient.a;
-			remoteRef = FF7A9D5F1C6478D5006743BA /* PBXContainerItemProxy */;
+			remoteRef = D218D27A1E4F7EE2000D8F51 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FF7A9D621C6478D5006743BA /* libPods.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPods.a;
-			remoteRef = FF7A9D611C6478D5006743BA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FF7A9D641C6478D5006743BA /* libPods-RCTMqtt.a */ = {
+		D218D27D1E4F7EE2000D8F51 /* libPods-RCTMqtt.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libPods-RCTMqtt.a";
-			remoteRef = FF7A9D631C6478D5006743BA /* PBXContainerItemProxy */;
+			remoteRef = D218D27C1E4F7EE2000D8F51 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		FF7A9D661C6478D5006743BA /* libSocketRocket.a */ = {
+		D22753761E4FC1C1009AB3F8 /* libSocketRocket.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libSocketRocket.a;
-			remoteRef = FF7A9D651C6478D5006743BA /* PBXContainerItemProxy */;
+			remoteRef = D22753751E4FC1C1009AB3F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8A2A2943DEA045B900795060 /* Check Pods Manifest.lock */ = {
+		8A2A2943DEA045B900795060 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F3DBD44A4CBD3EF469481482 /* Copy Pods Resources */ = {
+		F3DBD44A4CBD3EF469481482 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RCTMqtt/Pods-RCTMqtt-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -281,7 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF7A9D4E1C64788B006743BA /* RCTMqtt.m in Sources */,
-				FFAB5A541C6F7A3C00B4953D /* Mqtt.m in Sources */,
+				D20012C61E4FA06500CE2854 /* Mqtt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,7 +290,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../react-native-mqtt/ios/RCTMqtt/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -361,7 +328,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../react-native-mqtt/ios/RCTMqtt/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -370,17 +338,16 @@
 		};
 		FF7A9D4A1C64785B006743BA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9899CBF69418BB060CBA6A4 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 4249D0004A04076D92547DD0 /* Pods-RCTMqtt.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/Public/MQTTClient\"",
-					"\"${PODS_ROOT}/Headers/Public/SocketRocket\"",
-					"$(SRCROOT)/../../../react-native/React/**",
+					"$(SRCROOT)/../../react-native/React/**",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -388,17 +355,16 @@
 		};
 		FF7A9D4B1C64785B006743BA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6216C4E132BF21BB407435DF /* Pods.release.xcconfig */;
+			baseConfigurationReference = 65867FF64EF615F5B1FF81B0 /* Pods-RCTMqtt.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/CocoaLumberjack\"",
-					"\"${PODS_ROOT}/Headers/Public/MQTTClient\"",
-					"\"${PODS_ROOT}/Headers/Public/SocketRocket\"",
-					"$(SRCROOT)/../../../react-native/React/**",
+					"$(SRCROOT)/../../react-native/React/**",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

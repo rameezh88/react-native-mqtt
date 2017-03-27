@@ -2,7 +2,7 @@
 // MQTTSessionSynchron.m
 // MQTTClient.framework
 //
-// Copyright © 2013-2016, Christoph Krey
+// Copyright © 2013-2017, Christoph Krey. All rights reserved.
 //
 
 /**
@@ -19,14 +19,15 @@
 #import "MQTTLog.h"
 
 @interface MQTTSession()
-@property (nonatomic) BOOL synchronPub;
 @property (nonatomic) UInt16 synchronPubMid;
-@property (nonatomic) BOOL synchronUnsub;
 @property (nonatomic) UInt16 synchronUnsubMid;
-@property (nonatomic) BOOL synchronSub;
 @property (nonatomic) UInt16 synchronSubMid;
-@property (nonatomic) BOOL synchronConnect;
-@property (nonatomic) BOOL synchronDisconnect;
+
+- (dispatch_semaphore_t)semaphorePub;
+- (dispatch_semaphore_t)semaphoreSub;
+- (dispatch_semaphore_t)semaphoreUnsub;
+- (dispatch_semaphore_t)semaphoreConnect;
+- (dispatch_semaphore_t)semaphoreDisconnect;
 
 @end
 
@@ -36,15 +37,11 @@
  *
  */
 - (BOOL)connectAndWaitTimeout:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-    self.synchronConnect = TRUE;
     
     [self connect];
     
-    while (self.synchronConnect && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-        DDLogVerbose(@"[MQTTSessionSynchron] waiting for connect");
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-    }
+    dispatch_semaphore_wait(self.semaphoreConnect,
+                            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
     
     DDLogVerbose(@"[MQTTSessionSynchron] end connect");
     
@@ -62,15 +59,11 @@
  * @deprecated
  */
 - (BOOL)connectAndWaitToHost:(NSString*)host port:(UInt32)port usingSSL:(BOOL)usingSSL timeout:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-    self.synchronConnect = TRUE;
     
     [self connectToHost:host port:port usingSSL:usingSSL];
     
-    while (self.synchronConnect && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-        DDLogVerbose(@"[MQTTSessionSynchron] waiting for connect");
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-    }
+    dispatch_semaphore_wait(self.semaphoreConnect,
+                            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
     
     DDLogVerbose(@"[MQTTSessionSynchron] end connect");
     
@@ -82,22 +75,19 @@
 }
 
 - (BOOL)subscribeAndWaitToTopic:(NSString *)topic atLevel:(MQTTQosLevel)qosLevel timeout:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-    self.synchronSub = TRUE;
+    
     UInt16 mid = [self subscribeToTopic:topic atLevel:qosLevel];
     self.synchronSubMid = mid;
     
-    while (self.synchronSub && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-        DDLogVerbose(@"[MQTTSessionSynchron] waiting for suback %d", mid);
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-    }
+    dispatch_semaphore_wait(self.semaphoreSub,
+                            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
     
     DDLogVerbose(@"[MQTTSessionSynchron] end subscribe");
     
-    if (self.synchronSubMid == mid) {
-        return TRUE;
-    } else {
+    if (self.synchronSubMid != mid) {
         return FALSE;
+    } else {
+        return TRUE;
     }
 }
 
@@ -106,22 +96,19 @@
 }
 
 - (BOOL)subscribeAndWaitToTopics:(NSDictionary<NSString *, NSNumber *> *)topics timeout:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-    self.synchronSub = TRUE;
+    
     UInt16 mid = [self subscribeToTopics:topics];
     self.synchronSubMid = mid;
     
-    while (self.synchronSub && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-        DDLogVerbose(@"[MQTTSessionSynchron] waiting for suback %d", mid);
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-    }
+    dispatch_semaphore_wait(self.semaphoreSub,
+                            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
     
     DDLogVerbose(@"[MQTTSessionSynchron] end subscribe");
     
-    if (self.synchronSubMid == mid) {
-        return TRUE;
-    } else {
+    if (self.synchronSubMid != mid) {
         return FALSE;
+    } else {
+        return TRUE;
     }
 }
 
@@ -130,23 +117,19 @@
 }
 
 - (BOOL)unsubscribeAndWaitTopic:(NSString *)theTopic timeout:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-
-    self.synchronUnsub = TRUE;
+    
     UInt16 mid = [self unsubscribeTopic:theTopic];
     self.synchronUnsubMid = mid;
     
-    while (self.synchronUnsub && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-        DDLogVerbose(@"[MQTTSessionSynchron] waiting for unsuback %d", mid);
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-    }
+    dispatch_semaphore_wait(self.semaphoreUnsub,
+                            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
     
     DDLogVerbose(@"[MQTTSessionSynchron] end unsubscribe");
     
-    if (self.synchronUnsubMid == mid) {
-        return TRUE;
-    } else {
+    if (self.synchronUnsubMid != mid) {
         return FALSE;
+    } else {
+        return TRUE;
     }
 }
 
@@ -155,22 +138,19 @@
 }
 
 - (BOOL)unsubscribeAndWaitTopics:(NSArray<NSString *> *)topics timeout:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-    self.synchronUnsub = TRUE;
+    
     UInt16 mid = [self unsubscribeTopics:topics];
     self.synchronUnsubMid = mid;
     
-    while (self.synchronUnsub && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-        DDLogVerbose(@"[MQTTSessionSynchron] waiting for unsuback %d", mid);
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-    }
+    dispatch_semaphore_wait(self.semaphoreUnsub,
+                            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
     
     DDLogVerbose(@"[MQTTSessionSynchron] end unsubscribe");
     
-    if (self.synchronUnsubMid == mid) {
-        return TRUE;
-    } else {
+    if (self.synchronUnsubMid != mid) {
         return FALSE;
+    } else {
+        return TRUE;
     }
 }
 
@@ -186,27 +166,21 @@
                     retain:(BOOL)retainFlag
                        qos:(MQTTQosLevel)qos
                    timeout:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-
-    if (qos != MQTTQosLevelAtMostOnce) {
-        self.synchronPub = TRUE;
-    }
     
     UInt16 mid = self.synchronPubMid = [self publishData:data onTopic:topic retain:retainFlag qos:qos];
     if (qos == MQTTQosLevelAtMostOnce) {
         return TRUE;
-    } else {        
-        while (self.synchronPub && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-            DDLogVerbose(@"[MQTTSessionSynchron] waiting for mid %d", mid);
-            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-        }
+    } else {
+        
+        dispatch_semaphore_wait(self.semaphorePub,
+                                dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
         
         DDLogVerbose(@"[MQTTSessionSynchron] end publish");
         
-        if (self.synchronPubMid == mid) {
-            return TRUE;
-        } else {
+        if (self.synchronPubMid != mid) {
             return FALSE;
+        } else {
+            return TRUE;
         }
     }
 }
@@ -216,16 +190,13 @@
 }
 
 - (void)closeAndWait:(NSTimeInterval)timeout {
-    NSDate *started = [NSDate date];
-    self.synchronDisconnect = TRUE;
+    
     [self close];
     
-    while (self.synchronDisconnect && (timeout == 0 || [started timeIntervalSince1970] + timeout > [[NSDate date] timeIntervalSince1970])) {
-        DDLogVerbose(@"[MQTTSessionSynchron] waiting for close");
-        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:.1]];
-    }
-    DDLogVerbose(@"[MQTTSessionSynchron] end close");
+    dispatch_semaphore_wait(self.semaphoreDisconnect,
+                            dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout * NSEC_PER_SEC)));
     
+    DDLogVerbose(@"[MQTTSessionSynchron] end close");
 }
 
 @end

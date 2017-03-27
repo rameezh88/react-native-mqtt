@@ -2,8 +2,6 @@
 
 [![npm](https://img.shields.io/npm/dt/react-native-mqtt.svg)]()
 
-# Please use [paho.mqtt.javascript](https://github.com/eclipse/paho.mqtt.javascript) for your application, this repository not use for production
-
 ## Description 
 
 [react-native](https://github.com/facebook/react-native) mqtt client module
@@ -20,8 +18,18 @@ This library in progress developing, api may change, SSL/TLS non verify
 ## Getting started
 
 ### Manual install
+
+#### JS
+```bash
+npm install rusfearuth/react-native-mqtt --save
+```
+or
+```bash
+yarn add rusfearuth/react-native-mqtt
+```
+
+
 #### iOS
-- `npm install react-native-mqtt@latest --save`
 -  In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 - Go to `node_modules` ➜ `react-native-mqtt` and add `RCTMqtt.xcodeproj`
 - In XCode, in the project navigator, select your project. Add `libRCTmqtt.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
@@ -30,11 +38,9 @@ This library in progress developing, api may change, SSL/TLS non verify
 
 
 #### Android
-
--  `npm install react-native-mqtt@latest --save`
 -   Modify the ReactInstanceManager.builder() calls chain in `android/app/main/java/.../MainActivity.java` to include:
 
-```javascript
+```java
 import com.tuanpm.RCTMqtt.*; // import
 
 
@@ -136,7 +142,8 @@ mqtt.createClient({
 
 ## Todo
 
-* [ ] todo
+* [ ] Use WeakReference for timer
+* [ ] Add disconnecting event
 
 
 ## LICENSE
